@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Airco Offerte</title>
+
+  <link rel="stylesheet" href="airco-offerte.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+<section class="configurator configurator--airco">
+  <div class="configurator-content">
+    <div class="content-bar">
+
+      <h2>Airco configurator</h2>
+      <p id="stepIndicator" class="step-indicator"></p>
+
+      <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+      </div>
+
+      <!-- STAP 1 -->
+      <div class="step active">
+        <h3>Huishoudelijk of industrieel?</h3>
+        <div class="option-grid">
+          <button class="option" data-key="type" data-value="Huishoudelijk">Huishoudelijk</button>
+          <button class="option" data-key="type" data-value="Industrieel">Industrieel</button>
+        </div>
+      </div>   
+
+      <!-- STAP 2 -->
+      <div class="step">
+        <h3>Hoeveel ruimtes wilt u airconditioning?</h3>
+        <div class="option-grid">
+          <button class="option" data-key="aantalRuimtes" data-value="1">1</button>
+          <button class="option" data-key="aantalRuimtes" data-value="2">2</button>
+          <button class="option" data-key="aantalRuimtes" data-value="3">3</button>
+          <button class="option" data-key="aantalRuimtes" data-value="4">4</button>
+          <button class="option" data-key="aantalRuimtes" data-value="5">5</button>
+          <button class="option" data-key="aantalRuimtes" data-value="6">Meer</button>
+        </div>
+      </div>
+
+      <!-- STAP 3 -->
+      <div class="step">
+        <h3>Koelen / verwarmen?</h3>
+        <div class="option-grid">
+          <button class="option" data-key="gebruik" data-value="Koelen">Koelen</button>
+          <button class="option" data-key="gebruik" data-value="Verwarmen">Verwarmen</button>
+          <button class="option" data-key="gebruik" data-value="Beide">Beide</button>
+        </div>
+      </div>
+
+      <!-- STAP 4 -->
+      <div class="step">
+        <h3>Details van de ruimte</h3>
+        <div id="ruimtesContainer" class="ruimte-grid"></div>
+        <button class="inline-next-btn" id="ruimteVerderBtn" disabled>Verder</button>
+      </div>
+
+      <!-- STAP 5 -->
+      <div class="step">
+        <h3>Wat is de isolatieklasse?</h3>
+        <div class="option-grid">
+          <button class="option" data-key="isolatie" data-value="Matig">Matig</button>
+          <button class="option" data-key="isolatie" data-value="Redelijk">Redelijk</button>
+          <button class="option" data-key="isolatie" data-value="Goed">Goed</button>
+        </div>
+      </div>
+
+      <!-- STAP 6 -->
+      <div class="step">
+        <h3>Heeft u een Merkvoorkeur?</h3>
+        <div class="option-grid brand-grid">
+          <button class="option brand-option" data-key="merk" data-value="MHI">Mitsubishi Heavy Industries</span></button>
+          <button class="option brand-option" data-key="merk" data-value="Daikin">Daikin</span></button>
+          <button class="option brand-option" data-key="merk" data-value="LG">LG</span></button>
+          <button class="option brand-option" data-key="merk" data-value="Huismerk">Huismerk</span></button>
+        </div>
+      </div>
+
+      <!-- STAP 7 -->
+      <div class="step">
+        <div class="summary-layout">
+          <div class="summary-left" id="summary"></div>
+          <div class="summary-right">
+            <form id="offerteForm">
+              <input id="naam" placeholder="Naam" required>
+              <input id="adres" placeholder="Postcode + huisnr" required>
+              <input id="email" type="email" placeholder="E-mail" required>
+              <input id="tel" type="tel" placeholder="Telefoonnummer" required>
+              <button type="button" id="berekenBtn" class="price-btn" disabled>Bereken prijs
+              </button>
+            </form>
+            <div id="pricePopup" class="price-popup">
+              <div class="price-box">
+                <h3>Prijsindicatie</h3>
+
+                <p id="priceText"></p>
+
+                <div class="popup-buttons">
+                  <a href="mailto:info@jouwdomein.be" class="popup-btn popup-email">
+                    <i class="fa-solid fa-envelope"></i>
+                    Stuur ons een e-mail
+                  </a>
+
+                  <a href="tel:+3212345678" class="popup-btn popup-call">
+                    <i class="fa-solid fa-phone"></i>
+                    Bel ons
+                  </a>
+
+                  <a href="index.html" class="popup-close">
+                    <i class="fa-solid fa-house"></i>Ga naar startpagina
+                  </a>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="navigation">
+        <button id="backBtn">Terug</button>
+        <button id="nextBtn">Verder</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+
+
+        /* =====================================================
+            AIRCO CONFIGURATOR
+        ===================================================== */
+        const aircoTrigger = document.getElementById("aircoTrigger");
+            if (aircoTrigger) {
+            aircoTrigger.addEventListener("click", () => {
+                window.location.href = "airco-offerte.html";
+            });
+            }
+        document.addEventListener("DOMContentLoaded", () => {
+
+        const aircoSteps = document.querySelectorAll(".step");
+        const aircoProgress = document.getElementById("progress");
+        const aircoStepIndicator = document.getElementById("stepIndicator");
+        const backBtn = document.getElementById("backBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const ruimteVerderBtn = document.getElementById("ruimteVerderBtn");
+        const ruimtesContainer = document.getElementById("ruimtesContainer");
+        
+
+        let aircoStep = 0;
+
+        const aircoData = {
+            type: null,
+            aantalRuimtes: null,
+            industrieelRuimtes: [],
+            gebruik: null,
+            isolatie: null,
+            merk: null
+        };
+
+        function updateAircoUI() {
+
+            aircoSteps.forEach((s, i) => {
+                s.classList.toggle("active", i === aircoStep);
+            });
+
+            aircoProgress.style.width =
+                ((aircoStep + 1) / aircoSteps.length) * 100 + "%";
+
+            aircoStepIndicator.textContent =
+                aircoStep === aircoSteps.length - 1
+                    ? "Laatste stap 🎉"
+                    : `Stap ${aircoStep + 1} van ${aircoSteps.length}`;
+
+            const current = aircoSteps[aircoStep];
+            const isRuimteStap = current.contains(ruimtesContainer);
+            const isLaatsteStap = aircoStep === aircoSteps.length - 1;
+
+            /* Navigatie knoppen */
+            nextBtn.style.display = (isRuimteStap || isLaatsteStap) ? "none" : "block";
+            ruimteVerderBtn.style.display = isRuimteStap ? "block" : "none";
+            backBtn.style.display = aircoStep === 0 ? "none" : "block";
+
+            /* Validatie ruimte stap */
+            if (isRuimteStap) {
+                const inputs = ruimtesContainer.querySelectorAll("input");
+                ruimteVerderBtn.disabled = ![...inputs].every(i => i.value > 0);
+            }
+
+            if (isLaatsteStap) {
+                renderSummary();
+            }
+        }
+
+        backBtn.addEventListener("click", () => {
+            if (aircoStep === 0) {
+            window.location.href = "offerte.html";
+            return;
+            }
+            aircoStep--;
+            updateAircoUI();
+        });
+
+        nextBtn.addEventListener("click", () => {
+            if (aircoStep < aircoSteps.length - 1) {
+                aircoStep++;
+
+                if (aircoStep === aircoSteps.length - 1) {
+                    renderSummary();
+                }
+
+                updateAircoUI();
+            }
+        });
+
+        ruimteVerderBtn.addEventListener("click", () => {
+            if (!ruimteVerderBtn.disabled) {
+                aircoStep++;
+
+                if (aircoStep === aircoSteps.length - 1) {
+                    renderSummary();
+                }
+
+                updateAircoUI();
+            }
+        });
+
+        document.querySelectorAll(".option").forEach(btn => {
+            btn.addEventListener("click", () => {
+
+                aircoData[btn.dataset.key] = btn.dataset.value;
+
+                document
+                    .querySelectorAll(`[data-key="${btn.dataset.key}"]`)
+                    .forEach(b => b.classList.remove("active"));
+
+                btn.classList.add("active");
+
+                /* =====================================
+                  HUISHOUDELIJK → AANTAL RUIMTES
+                ===================================== */
+
+                if (btn.dataset.key === "aantalRuimtes") {
+
+                    ruimtesContainer.innerHTML = "";
+
+                    const isIndustrieel = aircoData.type === "Industrieel";
+
+                    for (let i = 0; i < btn.dataset.value; i++) {
+
+                        ruimtesContainer.innerHTML += `
+                            <div class="ruimte-card">
+                                <select>
+                                    ${
+                                        isIndustrieel
+                                        ? `
+                                            <option>Bureau</option>
+                                            <option>Onthaal</option>
+                                            <option>Eetruimte</option>
+                                            <option>Showroom</option>
+                                          `
+                                        : `
+                                            <option>Woonkamer</option>
+                                            <option>Slaapkamer</option>
+                                            <option>Zolder</option>
+                                            <option>Veranda</option>
+                                          `
+                                    }
+                                </select>
+                                <input type="number" min="1" placeholder="Oppervlakte (m²)">
+                            </div>
+                        `;
+                    }
+
+                    ruimtesContainer
+                        .querySelectorAll("input")
+                        .forEach(i => i.addEventListener("input", updateAircoUI));
+                }
+
+                if (aircoStep < aircoSteps.length - 1) {
+                    aircoStep++;
+                    updateAircoUI();
+                }
+            });
+        });
+
+        updateAircoUI();
+
+        function renderSummary() {
+
+            const summary = document.getElementById("summary");
+
+            /* Ruimtes ophalen */
+            const ruimteCards = ruimtesContainer.querySelectorAll(".ruimte-card");
+
+            let ruimtesTekst = "-";
+
+            if (ruimteCards.length > 0) {
+
+                const details = [];
+
+                ruimteCards.forEach(card => {
+                    const type = card.querySelector("select").value;
+                    const oppervlakte = card.querySelector("input").value;
+
+                    if (oppervlakte) {
+                        details.push(`${type} - ${oppervlakte} m²`);
+                    }
+                });
+
+                ruimtesTekst = `${ruimteCards.length} (${details.join(", ")})`;
+            }
+
+            summary.innerHTML = `
+                <h4>Samenvatting</h4>
+
+                <div class="summary-row">
+                    <span>Type</span>
+                    <span>${aircoData.type ?? "-"}</span>
+                </div>
+
+                <div class="summary-row">
+                    <span>Aantal ruimtes</span>
+                    <span>${ruimtesTekst}</span>
+                </div>
+
+                <div class="summary-row">
+                    <span>Gebruik</span>
+                    <span>${aircoData.gebruik ?? "-"}</span>
+                </div>
+
+                <div class="summary-row">
+                    <span>Isolatie</span>
+                    <span>${aircoData.isolatie ?? "-"}</span>
+                </div>
+
+                <div class="summary-row">
+                    <span>Merk</span>
+                    <span>${aircoData.merk ?? "-"}</span>
+                </div>
+            `;
+        }
+
+        const naamInput = document.getElementById("naam");
+        const adresInput = document.getElementById("adres");
+        const emailInput = document.getElementById("email");
+        const telInput = document.getElementById("tel");
+        const berekenBtn = document.getElementById("berekenBtn");
+
+        function checkForm() {
+
+            const valid =
+                naamInput.value.trim() !== "" &&
+                adresInput.value.trim() !== "" &&
+                emailInput.value.trim() !== ""&&
+                telInput.value.trim() !== "";
+
+            berekenBtn.disabled = !valid;
+        }
+
+        naamInput.addEventListener("input", checkForm);
+        adresInput.addEventListener("input", checkForm);
+        emailInput.addEventListener("input", checkForm);
+        telInput.addEventListener("input", checkForm);
+
+        const popup = document.getElementById("pricePopup");
+        const priceText = document.getElementById("priceText");
+
+        berekenBtn.addEventListener("click", () => {
+
+            const aantal = parseInt(aircoData.aantalRuimtes);
+            const merk = aircoData.merk;
+
+            let basisPrijs = 1200;
+
+            if (merk === "LG") basisPrijs += 150;
+            if (merk === "Daikin") basisPrijs += 750;
+            if (merk === "MHI") basisPrijs += 750;
+
+            let totaal = basisPrijs;
+
+            if (aantal > 1) {
+                totaal += (aantal - 1) * 1400;
+            }
+
+            const minPrijs = totaal;
+            const maxPrijs = totaal + 500; // marge
+
+            priceText.innerHTML = `
+                Deze installatie bedraagt tussen <strong>€${minPrijs}</strong> en 
+                <strong>€${maxPrijs}</strong>.<br><br>
+                Neem contact met ons op voor een vrijblijvende plaatsbezichtiging en offerte.
+            `;
+
+            popup.style.display = "flex";
+
+            sendMail(minPrijs, maxPrijs);
+        });
+
+        function sendMail(minPrijs, maxPrijs) {
+
+            fetch("send-mail.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    naam: naamInput.value,
+                    adres: adresInput.value,
+                    email: emailInput.value,
+                    ...aircoData,
+                    minPrijs,
+                    maxPrijs
+                })
+            });
+        }
+          const footerHomeBtn = document.getElementById("footerHomeBtn");
+
+                  if (footerHomeBtn) {
+                    footerHomeBtn.addEventListener("click", () => {
+                      window.location.href = "index.html";
+                    });
+                  }
+        });
+        
+</script>
+<!-- ===============================
+   FOOTER BAR
+================================ -->
+<footer class="footer-bar">
+
+  <!-- LINKS: LOGO -->
+  <div class="footer-left">
+    <img src="images/logo footer.jpeg" alt="Logo" class="footer-logo">
+  </div>
+
+  <!-- MIDDEN: TERUG KNOP -->
+  <div class="footer-center">
+    <button id="footerHomeBtn" class="footer-home-btn">
+      Terug naar startscherm
+    </button>
+  </div>
+
+  <!-- RECHTS: GOOGLE REVIEWS -->
+  <div class="footer-right">
+    <img src="images/google.png" alt="Google" class="google-logo">
+    <span class="review-score">4.9</span>
+    <span class="review-stars">★★★★★</span>
+  </div>
+
+</footer>
+</body>
+</html>

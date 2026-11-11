@@ -1,0 +1,446 @@
+<!-- DEEL 1: HTML – VOLLEDIG EN ONGEBROKEN -->
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offerte aanvragen</title>
+
+  <link rel="stylesheet" href="offerte.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    .hidden{display:none!important}
+    .step,.pv-step{display:none}
+    .step.active,.pv-step.active{display:block}
+    .tile-clickable{cursor:pointer}
+
+    .configurator{
+      position:relative;
+      min-height:100vh;
+      padding:80px 20px 160px;
+      background-size:cover;
+      background-position:center;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+    }
+    .configurator::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:rgba(5,20,50,.85);
+      z-index:0;
+    }
+    .configurator-content{
+      position:relative;
+      z-index:1;
+      width:100%;
+      max-width:720px;
+    }
+    .configurator--airco{background-image:url("images/yunus.png")}
+    .configurator--zonnepanelen{background-image:url("images/zonnepanelen1.jpeg")}
+  </style>
+</head>
+
+<body>
+
+<!-- STARTSCHERM -->
+<div id="mainContent">
+  <section class="hero">
+    <h1>Uw partner in Duurzame Energie. Vandaag én morgen.</h1>
+    <p>Selecteer hieronder waarvoor u een offerte wenst</p>
+  </section>
+
+  <section class="tiles-grid">
+    <div class="tile tile-clickable" id="koeltechniekTrigger" style="--bg:url('images/koeltechniek.jpeg')">
+        <div class="tile-overlay"></div>
+        <div class="tile-content">
+            <i class="fa-solid fa-snowflake"></i>
+            <span>Koeltechniek</span>
+        </div>
+        </div>
+
+        <div class="tile tile-clickable" id="aircoTrigger" style="--bg:url('images/yunus.png')">
+        <div class="tile-overlay"></div>
+        <div class="tile-content">
+            <i class="fa-solid fa-wind"></i>
+            <span>Airco</span>
+        </div>
+        </div>
+
+        <div class="tile tile-clickable" id="pvTrigger"style="--bg:url('images/zonnepanelen1.jpeg')">
+        <div class="tile-overlay"></div>
+        <div class="tile-content">
+            <i class="fa-solid fa-solar-panel"></i>
+            <span>Zonnepanelen</span>
+        </div>
+        </div>
+
+        <div class="tile" style="--bg:url('images/ventilatie.jpeg')">
+        <div class="tile-overlay"></div>
+        <div class="tile-content">
+            <i class="fa-solid fa-fan"></i>
+            <span>Ventilatie</span>
+        </div>
+        </div>
+
+        <div class="tile" style="--bg:url('images/warmtepomp.jpeg')">
+        <div class="tile-overlay"></div>
+        <div class="tile-content">
+            <i class="fa-solid fa-fire-flame-simple"></i>
+            <span>Warmtepomp</span>
+        </div>
+        </div>
+
+        <div class="tile" style="--bg:url('images/batterij.jpeg')">
+        <div class="tile-overlay"></div>
+        <div class="tile-content">
+            <i class="fa-solid fa-battery-full"></i>
+            <span>Thuisbatterij</span>
+        </div>
+        </div>
+
+  </section>
+</div>
+
+<!-- AIRCO CONFIGURATOR -->
+<div id="aircoConfigurator" class="hidden">
+<section class="configurator configurator--airco">
+<div class="configurator-content">
+<div class="content-bar">
+<h2>Airco configurator</h2>
+<p id="stepIndicator" class="step-indicator"></p>
+
+<div class="progress-bar"><div class="progress" id="progress"></div></div>
+
+<!-- STAP 1 -->
+<div class="step active">
+  <h3>Huishoudelijk of industrieel?</h3>
+  <div class="option-grid">
+    <button class="option" data-key="type" data-value="Huishoudelijk">Huishoudelijk</button>
+    <button class="option" data-key="type" data-value="Industrieel">Industrieel</button>
+  </div>
+</div>
+
+<!-- STAP 2 -->
+<div class="step">
+  <h3>Hoeveel ruimtes?</h3>
+  <div class="option-grid">
+    <button class="option" data-key="aantalRuimtes" data-value="1">1</button>
+    <button class="option" data-key="aantalRuimtes" data-value="2">2</button>
+    <button class="option" data-key="aantalRuimtes" data-value="3">3</button>
+    <button class="option" data-key="aantalRuimtes" data-value="4">4</button>
+    <button class="option" data-key="aantalRuimtes" data-value="5">5</button>
+    <button class="option" data-key="aantalRuimtes" data-value="6">Meer</button>
+  </div>
+</div>
+
+<!-- STAP 3 -->
+<div class="step">
+  <h3>Koelen / verwarmen?</h3>
+  <div class="option-grid">
+    <button class="option" data-key="gebruik" data-value="Koelen">Koelen</button>
+    <button class="option" data-key="gebruik" data-value="Verwarmen">Verwarmen</button>
+    <button class="option" data-key="gebruik" data-value="Beide">Beide</button>
+  </div>
+</div>
+
+<!-- STAP 4 -->
+<div class="step">
+  <h3>Ruimte details</h3>
+  <div id="ruimtesContainer" class="ruimte-grid"></div>
+  <button class="inline-next-btn" id="ruimteVerderBtn" disabled>Verder</button>
+</div>
+
+<!-- STAP 5 -->
+<div class="step">
+  <h3>Isolatie</h3>
+  <div class="option-grid">
+    <button class="option" data-key="isolatie" data-value="Matig">Matig</button>
+    <button class="option" data-key="isolatie" data-value="Redelijk">Redelijk</button>
+    <button class="option" data-key="isolatie" data-value="Goed">Goed</button>
+  </div>
+</div>
+
+<!-- STAP 6 -->
+<div class="step">
+  <h3>Merk</h3>
+  <div class="option-grid brand-grid">
+    <button class="option brand-option" data-key="merk" data-value="MHI" style="--bg:url('images/mhi.png')"><span>MHI</span></button>
+    <button class="option brand-option" data-key="merk" data-value="Daikin" style="--bg:url('images/daikin.png')"><span>Daikin</span></button>
+    <button class="option brand-option" data-key="merk" data-value="LG" style="--bg:url('images/lg.png')"><span>LG</span></button>
+    <button class="option brand-option" data-key="merk" data-value="Tosot" style="--bg:url('images/Tosot.png')"><span>Tosot</span></button>
+  </div>
+</div>
+
+<!-- STAP 7 -->
+<div class="step">
+  <div class="summary-layout">
+    <div class="summary-left" id="summary"></div>
+    <div class="summary-right">
+      <form>
+        <input placeholder="Naam" required>
+        <input placeholder="Postcode + huisnr">
+        <input placeholder="E-mail" required>
+        <button class="price-btn">Bereken prijs</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<button class="home-btn" id="homeBtn">← Terug</button>
+
+</div>
+</section>
+</div>
+
+  <div id="finalResult" class="hidden final-screen">
+    <h2>Indicatieve prijs</h2>
+    <p id="finalPrice"></p>
+    <p>
+      Ons salesteam neemt zo snel mogelijk contact met u op
+      om een eventueel plaatsbezoek of bezichtiging te bespreken.
+    </p>
+  </div>
+
+  <div class="navigation">
+    <button id="backBtn">Terug</button>
+    <button id="nextBtn">Verder</button>
+  </div>
+
+<button class="home-btn" id="homeBtn">← Terug naar startpagina</button>
+</section>
+</div>
+
+<div id="zonnepanelenConfigurator" class="hidden">
+  <section class="configurator configurator--zonnepanelen">
+    <div class="configurator-content">
+
+      <h2>Zonnepanelen configurator</h2>
+      <p id="pvStepIndicator" class="step-indicator"></p>
+
+      <div class="progress-bar">
+        <div class="progress" id="pvProgress"></div>
+      </div>
+
+      <div class="config-layout">
+
+        <!-- LINKS: AFBEELDING -->
+        <div
+          class="config-image"
+          id="pvImage"
+          style="background-image:url('images/pv-default.jpg')">
+        </div>
+
+        <!-- RECHTS: STAPPEN -->
+        <div class="config-steps">
+
+          <!-- STAP 1 -->
+          <div class="pv-step active" data-step="dak">
+            <h3>Wat voor dak heeft u?</h3>
+            <div class="option-grid">
+              <button class="pv-option" data-key="dak" data-value="Plat">Plat dak</button>
+              <button class="pv-option" data-key="dak" data-value="Schuin">Schuin dak</button>
+            </div>
+          </div>
+
+          <!-- STAP 2A: PLAT DAK -->
+          <div class="pv-step" data-step="opstelling">
+            <h3>Welke opstelling?</h3>
+            <div class="option-grid">
+              <button class="pv-option" data-key="opstelling" data-value="Oost/West">
+                Oost / West
+              </button>
+              <button class="pv-option" data-key="opstelling" data-value="Zuid">
+                Zuid
+              </button>
+            </div>
+          </div>
+
+          <!-- STAP 2B: SCHUIN DAK -->
+          <div class="pv-step" data-step="daktype">
+            <h3>Wat voor dakbedekking?</h3>
+            <div class="option-grid">
+              <button class="pv-option" data-key="daktype" data-value="Pannendak">
+                Pannendak
+              </button>
+              <button class="pv-option" data-key="daktype" data-value="Leien">
+                Leien
+              </button>
+              <button class="pv-option" data-key="daktype" data-value="Golfplaten">
+                Golfplaten
+              </button>
+            </div>
+          </div>
+
+          <!-- STAP 3 -->
+          <div class="pv-step" data-step="dakvlakken">
+            <h3>Hoeveel dakvlakken?</h3>
+            <div class="option-grid">
+              <button class="pv-option" data-key="dakvlakken" data-value="1">1</button>
+              <button class="pv-option" data-key="dakvlakken" data-value="2">2</button>
+              <button class="pv-option" data-key="dakvlakken" data-value="Meer">Meer</button>
+            </div>
+          </div>
+
+          <!-- STAP 4 -->
+          <div class="pv-step" data-step="merk">
+            <h3>Kies uw zonnepanelen</h3>
+            <div class="option-grid brand-grid">
+              <button
+                class="pv-option brand-option"
+                data-key="merk"
+                data-value="AIKO"
+                style="--bg:url('images/aiko.png')">
+                <span>AIKO</span>
+              </button>
+
+              <button
+                class="pv-option brand-option"
+                data-key="merk"
+                data-value="JA Solar"
+                style="--bg:url('images/jasolar.png')">
+                <span>JA Solar</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <button class="home-btn" id="pvHomeBtn">← Terug naar startpagina</button>
+
+    </div>
+  </section>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* =====================================================
+     BASIS
+  ===================================================== */
+  const body = document.body;
+  const mainContent = document.getElementById("mainContent");
+
+  function goHome() {
+    body.classList.remove("allow-scroll");
+    document
+      .querySelectorAll(".configurator-wrapper, #aircoConfigurator, #zonnepanelenConfigurator")
+      .forEach(el => el.classList.add("hidden"));
+    mainContent.style.display = "block";
+  }
+
+  /* =====================================================
+      AIRCO → GA NAAR APARTE PAGINA
+    ===================================================== */
+    const aircoTrigger = document.getElementById("aircoTrigger");
+
+    if (aircoTrigger) {
+      aircoTrigger.addEventListener("click", () => {
+        window.location.href = "airco-offerte.html";
+      });
+    }
+
+    /* =====================================================
+      KOELTECHNIEK → GA NAAR APARTE PAGINA
+    ===================================================== */
+    const koeltechniekTrigger = document.getElementById("koeltechniekTrigger");
+
+    if (koeltechniekTrigger) {
+      koeltechniekTrigger.addEventListener("click", () => {
+        window.location.href = "koeltechniek-offerte.html";
+      });
+    }
+
+  /* =====================================================
+     ZONNEPANELEN CONFIGURATOR
+  ===================================================== */
+  const pvTrigger = document.getElementById("pvTrigger");
+  const pvConfigurator = document.getElementById("zonnepanelenConfigurator");
+  const pvSteps = pvConfigurator.querySelectorAll(".pv-step");
+  const pvImage = document.getElementById("pvImage");
+  const pvHomeBtn = document.getElementById("pvHomeBtn");
+
+  let pvStep = 0;
+
+  function showPvStep(index) {
+    pvSteps.forEach((s, i) => s.classList.toggle("active", i === index));
+  }
+
+  pvTrigger.onclick = () => {
+    mainContent.style.display = "none";
+    pvConfigurator.classList.remove("hidden");
+    pvStep = 0;
+    pvImage.style.backgroundImage = "url('images/zonnepanelen.jpeg')";
+    showPvStep(0);
+  };
+
+  pvHomeBtn.onclick = goHome;
+
+  pvConfigurator.querySelectorAll(".pv-option").forEach(btn => {
+    btn.onclick = () => {
+      pvConfigurator
+        .querySelectorAll(`[data-key="${btn.dataset.key}"]`)
+        .forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      if (btn.dataset.key === "dak") {
+        pvImage.style.backgroundImage =
+          btn.dataset.value === "Plat"
+            ? "url('images/pv-plat.jpg')"
+            : "url('images/pv-schuin.jpg')";
+        pvStep = btn.dataset.value === "Plat" ? 1 : 2;
+      } else {
+        pvStep++;
+      }
+
+      showPvStep(pvStep);
+    };
+  });
+
+  /* =====================================================
+   FOOTER HOME → ALTIJD NAAR INDEX.HTML
+  ===================================================== */
+  const footerHomeBtn = document.getElementById("footerHomeBtn");
+
+  if (footerHomeBtn) {
+    footerHomeBtn.addEventListener("click", () => {
+      window.location.href = "index.html";
+    });
+  }
+
+});
+</script>
+
+<!-- ===============================
+   FOOTER BAR
+================================ -->
+<footer class="footer-bar">
+
+  <!-- LINKS: LOGO -->
+  <div class="footer-left">
+    <img src="images/logo footer.jpeg" alt="Logo" class="footer-logo">
+  </div>
+
+  <!-- MIDDEN: TERUG KNOP -->
+  <div class="footer-center">
+    <button id="footerHomeBtn" class="footer-home-btn">
+      Terug naar startscherm
+    </button>
+    
+  </div>
+
+  <!-- RECHTS: GOOGLE REVIEWS -->
+  <div class="footer-right">
+    <img src="images/google.png" alt="Google" class="google-logo">
+    <span class="review-score">4.9</span>
+    <span class="review-stars">★★★★★</span>
+  </div>
+
+</footer>
+</body>
+</html>

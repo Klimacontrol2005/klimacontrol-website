@@ -1,0 +1,64 @@
+/* =====================================
+   ZONNEPANELEN CONFIGURATOR
+===================================== */
+.pv-step {
+  display: none;
+}
+
+.pv-step.active {
+  display: block;
+}
+
+/* =====================================
+   LAYOUT
+===================================== */
+.config-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 32px;
+  margin-top: 30px;
+}
+
+.config-image {
+  min-height: 420px;
+  border-radius: 18px;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid #1e293b;
+}
+
+/* =====================================
+   PV OPTIES
+===================================== */
+.pv-option {
+  width: 100%;
+  padding: 22px 0;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #0f172a, #020617);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #e5e7eb;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 15px;
+}
+
+.pv-option:hover {
+  border-color: #22c55e;
+  color: #22c55e;
+  transform: translateY(-2px);
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+@media (max-width: 900px) {
+  .config-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .config-image {
+    min-height: 260px;
+  }
+}
