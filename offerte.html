@@ -38,8 +38,8 @@
       width:100%;
       max-width:720px;
     }
-    .configurator--airco{background-image:url("images/yunus.png")}
-    .configurator--zonnepanelen{background-image:url("images/zonnepanelen1.jpeg")}
+    .configurator--airco{background-image:url("images/yunus.webp")}
+    .configurator--zonnepanelen{background-image:url("images/zonnepanelen1.webp")}
   </style>
 </head>
 
@@ -61,7 +61,7 @@
         </div>
         </div>
 
-        <div class="tile tile-clickable" id="aircoTrigger" style="--bg:url('images/yunus.png')">
+        <div class="tile tile-clickable" id="aircoTrigger" style="--bg:url('images/yunus.webp')">
         <div class="tile-overlay"></div>
         <div class="tile-content">
             <i class="fa-solid fa-wind"></i>
@@ -69,7 +69,7 @@
         </div>
         </div>
 
-        <div class="tile tile-clickable" id="pvTrigger"style="--bg:url('images/zonnepanelen1.jpeg')">
+        <div class="tile tile-clickable" id="pvTrigger"style="--bg:url('images/zonnepanelen1.webp')">
         <div class="tile-overlay"></div>
         <div class="tile-content">
             <i class="fa-solid fa-solar-panel"></i>
@@ -77,7 +77,7 @@
         </div>
         </div>
 
-        <div class="tile" style="--bg:url('images/ventilatie.jpeg')">
+        <div class="tile" style="--bg:url('images/ventilatie.webp')">
         <div class="tile-overlay"></div>
         <div class="tile-content">
             <i class="fa-solid fa-fan"></i>
@@ -85,7 +85,7 @@
         </div>
         </div>
 
-        <div class="tile" style="--bg:url('images/warmtepomp.jpeg')">
+        <div class="tile" style="--bg:url('images/warmtepomp.webp')">
         <div class="tile-overlay"></div>
         <div class="tile-content">
             <i class="fa-solid fa-fire-flame-simple"></i>
@@ -93,7 +93,7 @@
         </div>
         </div>
 
-        <div class="tile" style="--bg:url('images/batterij.jpeg')">
+        <div class="tile" style="--bg:url('images/batterij.webp')">
         <div class="tile-overlay"></div>
         <div class="tile-content">
             <i class="fa-solid fa-battery-full"></i>
@@ -231,7 +231,7 @@
         <div
           class="config-image"
           id="pvImage"
-          style="background-image:url('images/pv-default.jpg')">
+          style="background-image:url('images/zonnepanelen.webp')">
         </div>
 
         <!-- RECHTS: STAPPEN -->
@@ -375,7 +375,7 @@ document.addEventListener("DOMContentLoaded", () => {
     mainContent.style.display = "none";
     pvConfigurator.classList.remove("hidden");
     pvStep = 0;
-    pvImage.style.backgroundImage = "url('images/zonnepanelen.jpeg')";
+    pvImage.style.backgroundImage = "url('images/zonnepanelen.webp')";
     showPvStep(0);
   };
 
@@ -391,8 +391,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (btn.dataset.key === "dak") {
         pvImage.style.backgroundImage =
           btn.dataset.value === "Plat"
-            ? "url('images/pv-plat.jpg')"
-            : "url('images/pv-schuin.jpg')";
+            ? "url('images/zonnepanelen1.webp')"
+            : "url('images/zonnepanelen.webp')";
         pvStep = btn.dataset.value === "Plat" ? 1 : 2;
       } else {
         pvStep++;
@@ -423,7 +423,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   <!-- LINKS: LOGO -->
   <div class="footer-left">
-    <img src="images/logo footer.jpeg" alt="Logo" class="footer-logo">
+    <img src="images/logo-footer.webp" alt="Logo" class="footer-logo">
   </div>
 
   <!-- MIDDEN: TERUG KNOP -->
@@ -436,7 +436,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   <!-- RECHTS: GOOGLE REVIEWS -->
   <div class="footer-right">
-    <img src="images/google.png" alt="Google" class="google-logo">
+    <img src="images/google.webp" alt="Google" class="google-logo">
     <span class="review-score">4.9</span>
     <span class="review-stars">★★★★★</span>
   </div>

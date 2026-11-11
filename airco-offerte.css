@@ -14,7 +14,7 @@ html, body {
 
 body {
   background: radial-gradient(circle at top, #3a579b 0%, #020617 60%);
-  background-image: url("images/emre.jpeg");
+  background-image: url("images/emre.webp");
   background-size: 135%;
   background-position: 60% center;
   background-attachment: fixed; /* BELANGRIJK */

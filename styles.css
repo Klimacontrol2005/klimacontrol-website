@@ -174,12 +174,12 @@ body {
   isolation: isolate;
 
   /* DEFAULT = PARTICULIER */
-  background: url("images/hero-airco.jpeg") center / cover no-repeat;
+  background: url("images/hero-airco.webp") center / cover no-repeat;
 }
 
 /* ===== ACHTERGROND WISSEL BIJ ZAKELIJK ===== */
 .hero.zakelijk-bg {
-  background: url("images/hero-particulier.jpg") center / cover no-repeat;
+  background: url("images/hero-particulier.webp") center / cover no-repeat;
 }
 
 /* DONKERE GRADIENT */
@@ -759,7 +759,7 @@ body {
 /* ONDERSTE AFBEELDING */
 .bottom-image {
   height: 380px;
-  background: url("images/footer-image.jpg") center / cover no-repeat;
+  background: url("images/baba.webp") center / cover no-repeat;
 }
 
 .reviews {
@@ -930,7 +930,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: url("images/eren.png") right / cover no-repeat;
+  background: url("images/eren.webp") right / cover no-repeat;
   filter: blur(1px);
   transform: scale(1.08); /* voorkomt blur-randen */
   z-index: 0;
